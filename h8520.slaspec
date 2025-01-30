@@ -951,6 +951,25 @@ reloffs16: reloc is disp16       [ reloc=(inst_next & 0xFF0000) | ((inst_next+di
 :bset.w       eaw_abs8_br,op_imm4        is eaw_abs8_br;      opcode47=12 & op_imm4                 { tmp:2 = eaw_abs8_br     ; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp | (1 << op_imm4); eaw_abs8_br = tmp; }
 :bset.w       eaw_abs16,op_imm4   is eaw_abs16; opcode47=12 & op_imm4 [targetBase=0;] { tmp:2 = eaw_abs16; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp | (1 << op_imm4); eaw_abs16 = tmp; }
 
+# BNOT  #xx,<EAd>          Bit test and set
+#       Z: EAd_orig[xx] == 0
+:bnot.b       eab_direct,op_imm4         is eab_direct;       opcode47=14 & op_imm4                 { tmp:1 = eab_direct[0,8] ; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eab_direct[0,8] = tmp; }
+:bnot.b       eab_indirect,op_imm4       is eab_indirect;     opcode47=14 & op_imm4                 { tmp:1 = eab_indirect    ; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eab_indirect = tmp; }
+:bnot.b       eab_disp8,op_imm4          is eab_disp8;        opcode47=14 & op_imm4                 { tmp:1 = eab_disp8       ; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eab_disp8 = tmp; }
+:bnot.b       eab_disp16,op_imm4         is eab_disp16;       opcode47=14 & op_imm4                 { tmp:1 = eab_disp16      ; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eab_disp16 = tmp; }
+:bnot.b       eab_predec,op_imm4         is eab_predec;       opcode47=14 & op_imm4                 { tmp:1 = eab_predec      ; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eab_predec = tmp; }
+:bnot.b       eab_postinc,op_imm4        is eab_postinc;      opcode47=14 & op_imm4                 { tmp:1 = eab_postinc     ; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eab_postinc = tmp; }
+:bnot.b       eab_abs8_br,op_imm4        is eab_abs8_br;      opcode47=14 & op_imm4                 { tmp:1 = eab_abs8_br     ; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eab_abs8_br = tmp; }
+:bnot.b       eab_abs16,op_imm4   is eab_abs16; opcode47=14 & op_imm4 [targetBase=0;] { tmp:1 = eab_abs16; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eab_abs16 = tmp; }
+:bnot.w       eaw_direct,op_imm4         is eaw_direct;       opcode47=14 & op_imm4                 { tmp:2 = eaw_direct      ; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eaw_direct = tmp; }
+:bnot.w       eaw_indirect,op_imm4       is eaw_indirect;     opcode47=14 & op_imm4                 { tmp:2 = eaw_indirect    ; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eaw_indirect = tmp; }
+:bnot.w       eaw_disp8,op_imm4          is eaw_disp8;        opcode47=14 & op_imm4                 { tmp:2 = eaw_disp8       ; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eaw_disp8 = tmp; }
+:bnot.w       eaw_disp16,op_imm4         is eaw_disp16;       opcode47=14 & op_imm4                 { tmp:2 = eaw_disp16      ; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eaw_disp16 = tmp; }
+:bnot.w       eaw_predec,op_imm4         is eaw_predec;       opcode47=14 & op_imm4                 { tmp:2 = eaw_predec      ; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eaw_predec = tmp; }
+:bnot.w       eaw_postinc,op_imm4        is eaw_postinc;      opcode47=14 & op_imm4                 { tmp:2 = eaw_postinc     ; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eaw_postinc = tmp; }
+:bnot.w       eaw_abs8_br,op_imm4        is eaw_abs8_br;      opcode47=14 & op_imm4                 { tmp:2 = eaw_abs8_br     ; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eaw_abs8_br = tmp; }
+:bnot.w       eaw_abs16,op_imm4   is eaw_abs16; opcode47=14 & op_imm4 [targetBase=0;] { tmp:2 = eaw_abs16; $(ZF) = (tmp & (1 << op_imm4)) == 0; tmp = tmp ^ (1 << op_imm4); eaw_abs16 = tmp; }
+
 # BTST  Rs,<EAd>           Bit test and set
 #       Z: EAd[Rs] == 0
 :btst.b       Rs, eab_direct          is eab_direct;       opcode=15 & Rs                 { $(ZF) = (eab_direct[0,8] & (1 << Rs)) == 0;       }
